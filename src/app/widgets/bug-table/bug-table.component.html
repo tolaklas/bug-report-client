@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Priority</th>
+    <th>Reporter</th>
+    <th>Date Created</th>
+    <th>Status</th>
+  </tr>
+  <tbody>
+    <tr *ngFor="let bug of bugs">
+      <td>{{bug?.title}}</td>
+      <td>{{bug?.priority}}</td>
+      <td>{{bug?.reporter}}</td>
+      <td>{{bug?.dateCreated}}</td>
+      <td>{{bug?.status}}</td>
+    </tr>
+  </tbody>
+</table>

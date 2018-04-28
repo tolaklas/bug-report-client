@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { BugTableComponent } from './widgets/bug-table/bug-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BugTableComponent,
   ],
   imports: [
     BrowserModule,
