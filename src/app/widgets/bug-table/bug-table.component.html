@@ -1,11 +1,13 @@
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Priority</th>
-    <th>Reporter</th>
-    <th>Date Created</th>
-    <th>Status</th>
-  </tr>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Priority</th>
+      <th>Reporter</th>
+      <th>Date Created</th>
+      <th>Status</th>
+    </tr>
+  </thead>
   <tbody>
     <tr *ngFor="let bug of bugs">
       <td>{{bug?.title}}</td>

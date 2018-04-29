@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BugTableComponent } from './widgets/bug-table/bug-table.component';
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [
@@ -12,8 +14,10 @@ import { BugTableComponent } from './widgets/bug-table/bug-table.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

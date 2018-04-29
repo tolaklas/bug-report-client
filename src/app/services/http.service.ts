@@ -6,7 +6,7 @@ import { Bug } from '../models/bug';
 
 @Injectable()
 export class HttpService {
-  private _URL = 'localhost:3001';
+  private _URL = 'http://localhost:3001';
 
   constructor( private _httpClient: HttpClient) { }
 
