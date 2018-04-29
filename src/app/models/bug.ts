@@ -1,7 +1,9 @@
 export interface Bug {
   title: string;
+  description: string;
   priority: number;
-  reporter: string;
-  dateCreated?: string;
+  reporter?: string;
+  createdAt?: string;
+  updatedAt?: string;
   status?: string;
 }

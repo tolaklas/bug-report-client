@@ -1,20 +1,17 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Priority</th>
-      <th>Reporter</th>
-      <th>Date Created</th>
-      <th>Status</th>
+      <th *ngFor="let header of headers">
+        <a (click)='sort(header?.value)'>{{header?.name}}</a>
+      </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let bug of bugs">
-      <td>{{bug?.title}}</td>
-      <td>{{bug?.priority}}</td>
-      <td>{{bug?.reporter}}</td>
-      <td>{{bug?.dateCreated}}</td>
-      <td>{{bug?.status}}</td>
+      <td *ngFor="let header of headers">
+        <span *ngIf="header?.value !== 'createdAt' && header?.value !== 'updatedAt';else date">{{bug[header?.value]}}</span>
+        <ng-template #date>{{bug[header?.value] | date:'medium'}}</ng-template>
+      </td>
     </tr>
   </tbody>
 </table>
