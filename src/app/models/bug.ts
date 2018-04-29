@@ -1,4 +1,4 @@
-export class Bug {
+export interface Bug {
   title: string;
   priority: number;
   reporter: string;

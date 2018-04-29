@@ -11,7 +11,7 @@ export class HttpService {
   constructor( private _httpClient: HttpClient) { }
 
   getBugs(): Observable<Bug[]> {
-    return this._httpClient.get<Bug[]>(this._url);
+    return this._httpClient.get<Bug[]>(this._URL + '/bugs');
   }
 
 }
