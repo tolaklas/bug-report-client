@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { Bug } from '../models/bug';
 import { Order } from '../models/order';
 
@@ -15,6 +15,10 @@ export class HttpService {
     const params = {};
     if (sortItem && sortType) { params['sort'] = `${sortItem},${sortType}`; }
     return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params});
+  }
+
+  postBug(bug: Bug): Observable<Bug> {
+    return this._httpClient.post<Bug>(this._URL + '/bugs', bug);
   }
 
 }

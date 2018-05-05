@@ -1,3 +1,4 @@
+
 export interface Bug {
   title: string;
   description: string;
