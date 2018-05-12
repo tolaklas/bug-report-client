@@ -1,0 +1,52 @@
+<form class="form" [formGroup]='bugForm' [class.was-validated]="bugForm.invalid && bugForm.dirty" (submit)="formSubmit()">
+
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
+    <div class="col-md-2 mb-3">
+      <label class="form-control-label">Title</label>
+      <input class="form-control" formControlName='title' type="text" name="title">
+      <div *ngIf="bugForm.get('title').invalid && bugForm.get('title').dirty" class="invalid-feedback">
+        {{titleFormControlErrorMessage}}
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">description</label>
+      <input class="form-control" type="text" name="description" formControlName='description'>
+      <div *ngIf="bugForm.get('description').invalid && bugForm.get('description').dirty" class="invalid-feedback">
+        {{descriptionFormControlErrorMessage}}
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">Priority</label>
+      <select formControlName='priority' name="priority">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let priority of priorities">
+          {{priority}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">reporter</label>
+      <select formControlName='reporter' name="reporter">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let reporter of reporters">
+          {{reporter}}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">status</label>
+      <select formControlName="status" name="status">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let status of statusTypes">
+          {{status}}
+        </option>
+      </select>
+      <div *ngIf="bugForm.get('status').invalid && bugForm.get('status').dirty" style="color:red">
+        {{statusFormControlErrorMessage}}
+      </div>
+      {{bugForm.get('status').invalid}} {{bugForm.get('status').dirty}}
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!bugForm.valid">Submit</button>
+
+</form>

@@ -73,7 +73,7 @@ export class BugCreateEditComponent implements OnInit {
         this.titleFormControlErrorMessage = '';
         if ((this.titleFormControl.touched || this.titleFormControl.dirty) && this.titleFormControl.errors) {
           this.titleFormControlErrorMessage = Object.keys(this.titleFormControlValidationMessages)
-            .map(c => this.titleFormControlErrorMessage[c]).join(' ');
+            .map(c => this.titleFormControlValidationMessages[c]).join(' ');
         }
       }
     );
@@ -83,7 +83,7 @@ export class BugCreateEditComponent implements OnInit {
         this.descriptionFormControlErrorMessage = '';
         if ((this.descriptionFormControl.touched || this.descriptionFormControl.dirty) && this.descriptionFormControl.errors) {
           this.descriptionFormControlErrorMessage = Object.keys(this.descriptionFormControlValidationMessages)
-            .map(c => this.descriptionFormControlErrorMessage[c]).join(' ');
+            .map(c => this.descriptionFormControlValidationMessages[c]).join(' ');
         }
       }
     );
@@ -105,20 +105,20 @@ export class BugCreateEditComponent implements OnInit {
         this.statusFormControlErrorMessage = '';
         if ((this.statusFormControl.touched || this.statusFormControl.dirty) && this.statusFormControl.errors) {
           this.statusFormControlErrorMessage = Object.keys(this.statusFormControlValidationMessages)
-            .map(c => this.statusFormControlErrorMessage[c]).join(' ');
+            .map(c => this.statusFormControlValidationMessages[c]).join(' ');
         }
       }
     );
   }
 
   formSubmit() {
-    console.log(this.bugForm);
-    // this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this._router.navigate(['']);
-    //   },
-    //   err => console.log(err)
-    // );
+    this.bug = this.bugForm.value;
+    this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
+      data => {
+        console.log(data);
+        this._router.navigate(['']);
+      },
+      err => console.log(err)
+    );
   }
 }
