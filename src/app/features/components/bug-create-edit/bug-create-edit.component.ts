@@ -36,7 +36,11 @@ export class BugCreateEditComponent implements OnInit {
     minlength: 'The minlength is 3 characters',
   };
 
-  priorityFormControl = new FormControl('');
+  priorityFormControl = new FormControl('', [Validators.required]);
+  priorityFormControlErrorMessage = '';
+  priorityFormControlValidationMessages = {
+    required : 'The first name is required'
+  };
   reporterFormControl = new FormControl('');
   reporterFormControlErrorMessage = '';
   statusFormControl = new FormControl('');
@@ -84,6 +88,16 @@ export class BugCreateEditComponent implements OnInit {
         if ((this.descriptionFormControl.touched || this.descriptionFormControl.dirty) && this.descriptionFormControl.errors) {
           this.descriptionFormControlErrorMessage = Object.keys(this.descriptionFormControlValidationMessages)
             .map(c => this.descriptionFormControlValidationMessages[c]).join(' ');
+        }
+      }
+    );
+
+    this.priorityFormControl.valueChanges.subscribe(
+      value => {
+        this.priorityFormControlErrorMessage = '';
+        if ((this.priorityFormControl.touched || this.priorityFormControl.dirty) && this.priorityFormControl.errors) {
+          this.priorityFormControlErrorMessage = Object.keys(this.priorityFormControlValidationMessages)
+            .map(c => this.priorityFormControlValidationMessages[c]).join(' ');
         }
       }
     );
