@@ -20,6 +20,9 @@
         <span *ngIf="header?.value !== 'createdAt' && header?.value !== 'updatedAt';else date">{{bug[header?.value]}}</span>
         <ng-template #date>{{bug[header?.value] | date:'medium'}}</ng-template>
       </td>
+      <td>
+        <a [routerLink]='["/bug", bug.id]'>Edit</a>
+      </td>
     </tr>
   </tbody>
 </table>

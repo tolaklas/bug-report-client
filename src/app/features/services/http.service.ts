@@ -17,6 +17,10 @@ export class HttpService {
     return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params});
   }
 
+  getBug(id: string): Observable<Bug> {
+    return this._httpClient.get<Bug>(this._URL + `/bugs/${id}`);
+  }
+
   postBug(bug: Bug): Observable<Bug> {
     return this._httpClient.post<Bug>(this._URL + '/bugs', bug);
   }

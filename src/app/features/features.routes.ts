@@ -5,4 +5,5 @@ import { BugCreateEditComponent } from './components/bug-create-edit/bug-create-
 export const featureRoutes: Routes = [
   {path: 'home', component: BugTableComponent},
   {path: 'bug', component: BugCreateEditComponent},
+  {path: 'bug/:id', component: BugCreateEditComponent}
 ];
