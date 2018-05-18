@@ -1,0 +1,16 @@
+<form class="form" [formGroup]='bugCommentForm' (submit)="formSubmit()" *ngIf="show">
+
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">Free Text</label>
+      <input class="form-control" formControlName='freeText' type="text" name="freeText">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-control-label">Reporter Name</label>
+      <input class="form-control" type="text" name="reporterName" formControlName='reporterName'>
+    </div>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+
+</form>
+

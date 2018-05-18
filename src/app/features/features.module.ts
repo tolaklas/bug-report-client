@@ -7,6 +7,7 @@ import { BugTableComponent } from './components/bug-table/bug-table.component';
 import { RouterModule } from '@angular/router';
 import { featureRoutes } from './features.routes';
 import { HttpService } from './services/http.service';
+import { BugCommentComponent } from './components/bug-comment/bug-comment.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HttpService } from './services/http.service';
   declarations: [
     BugCreateEditComponent,
     BugTableComponent,
+    BugCommentComponent,
   ],
   providers: [
     HttpService
