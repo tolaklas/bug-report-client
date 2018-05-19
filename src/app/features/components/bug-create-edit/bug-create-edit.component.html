@@ -51,5 +51,9 @@
 
 </form>
 
-<hr>
-<codehub-bug-comment></codehub-bug-comment>
+<ng-container *ngIf="id">
+  <br>
+  <codehub-bug-comment-table [comments]='bug?.comments'></codehub-bug-comment-table>
+  <hr>
+  <codehub-bug-comment (postComment)='postComment($event)'></codehub-bug-comment>
+</ng-container>

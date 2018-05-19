@@ -6,8 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { debounce} from 'rxjs/operators';
 import { timer } from 'rxjs/observable/timer';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+import { BugComment } from '../../models/bug-comment';
 
 @Component({
   selector: 'codehub-bug-create-edit',
@@ -148,13 +147,7 @@ export class BugCreateEditComponent implements OnInit {
   formSubmit() {
     this.bug = this.bugForm.value;
     if (this.id) {
-      this._httpService.updateBug(this.bug, this.id).pipe(debounce(() => timer(5000))).subscribe(
-        data => {
-          console.log(data);
-          this._router.navigate(['']);
-        },
-        err => console.log(err)
-      );
+      this.updateBug(this.bug);
     } else {
       this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
         data => {
@@ -164,5 +157,20 @@ export class BugCreateEditComponent implements OnInit {
         err => console.log(err)
       );
     }
+  }
+
+  postComment(comment: BugComment) {
+    this.bug.comments.push(comment);
+    this.updateBug(this.bug, false);
+  }
+
+  private updateBug(bug: Bug, navigate: boolean = true) {
+    this._httpService.updateBug(bug, this.id).pipe(debounce(() => timer(5000))).subscribe(
+      data => {
+        console.log(data);
+        if (navigate) {this._router.navigate(['']); }
+      },
+      err => console.log(err)
+    );
   }
 }

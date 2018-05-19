@@ -1,16 +1,21 @@
-<form class="form" [formGroup]='bugCommentForm' (submit)="formSubmit()" *ngIf="show">
+<form class="form" [formGroup]='bugCommentForm' (submit)="formSubmit()">
 
   <div class="form-row">
     <div class="col-md-6 mb-3">
-      <label class="form-control-label">Free Text</label>
-      <input class="form-control" formControlName='freeText' type="text" name="freeText">
+      <label class="form-control-label">Description</label>
+      <input class="form-control" formControlName='description' type="text" name="description">
     </div>
     <div class="col-md-6 mb-3">
-      <label class="form-control-label">Reporter Name</label>
-      <input class="form-control" type="text" name="reporterName" formControlName='reporterName'>
+      <label class="form-control-label">reporter</label>
+      <select formControlName='reporter' name="reporter">
+        <option [ngValue]="null">Select</option>
+        <option *ngFor="let reporter of reporters">
+          {{reporter}}
+        </option>
+      </select>
     </div>
   </div>
-  <button class="btn btn-primary">Submit</button>
+  <button class="btn btn-primary" [disabled]='!bugCommentForm.valid'>Submit</button>
 
 </form>
 

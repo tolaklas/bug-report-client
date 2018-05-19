@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { featureRoutes } from './features.routes';
 import { HttpService } from './services/http.service';
 import { BugCommentComponent } from './components/bug-comment/bug-comment.component';
+import { BugCommentTableComponent } from './components/bug-comment-table/bug-comment-table.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { BugCommentComponent } from './components/bug-comment/bug-comment.compon
     BugCreateEditComponent,
     BugTableComponent,
     BugCommentComponent,
+    BugCommentTableComponent,
   ],
   providers: [
     HttpService

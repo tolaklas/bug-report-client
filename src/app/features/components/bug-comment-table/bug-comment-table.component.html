@@ -1,0 +1,14 @@
+<table class="table" *ngIf="comments?.length">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Reporter</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let comment of comments">
+      <td>{{comment?.description}}</td>
+      <td>{{comment?.reporter}}</td>
+    </tr>
+  </tbody>
+</table>
