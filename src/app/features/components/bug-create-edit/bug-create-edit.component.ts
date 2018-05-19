@@ -15,7 +15,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./bug-create-edit.component.scss']
 })
 export class BugCreateEditComponent implements OnInit {
-
+  id: string;
   bug: Bug;
   priorities: number[] = [1, 2, 3];
   reporters: string[] = ['QA', 'PO', 'DEV'];
@@ -58,10 +58,16 @@ export class BugCreateEditComponent implements OnInit {
   ) { }
 
   initialize(id: string) {
+    this.id = id;
     if (id) {
-
       this._httpService.getBug(id).subscribe(b => {
         this.bug = b;
+        this.bugForm.controls.title.setValue(this.bug.title);
+        this.bugForm.controls.description.setValue(this.bug.description);
+        this.bugForm.controls.priority.setValue(this.bug.priority);
+        this.bugForm.controls.reporter.setValue(this.bug.reporter);
+        this.bugForm.controls.status.setValue(this.bug.status);
+
       }, err => console.log(err));
 
     } else {
@@ -76,9 +82,6 @@ export class BugCreateEditComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.initialize(this._route.snapshot.params.id);
-
     this.bugForm = new FormGroup({
       title: this.titleFormControl,
       description: this.descriptionFormControl,
@@ -86,6 +89,8 @@ export class BugCreateEditComponent implements OnInit {
       reporter: this.reporterFormControl,
       status: this.statusFormControl
     });
+
+    this.initialize(this._route.snapshot.params.id);
 
     this.titleFormControl.valueChanges.subscribe(
       value => {
@@ -142,12 +147,22 @@ export class BugCreateEditComponent implements OnInit {
 
   formSubmit() {
     this.bug = this.bugForm.value;
-    this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
-      data => {
-        console.log(data);
-        this._router.navigate(['']);
-      },
-      err => console.log(err)
-    );
+    if (this.id) {
+      this._httpService.updateBug(this.bug, this.id).pipe(debounce(() => timer(5000))).subscribe(
+        data => {
+          console.log(data);
+          this._router.navigate(['']);
+        },
+        err => console.log(err)
+      );
+    } else {
+      this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
+        data => {
+          console.log(data);
+          this._router.navigate(['']);
+        },
+        err => console.log(err)
+      );
+    }
   }
 }

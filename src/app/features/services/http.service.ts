@@ -25,4 +25,8 @@ export class HttpService {
     return this._httpClient.post<Bug>(this._URL + '/bugs', bug);
   }
 
+  updateBug(bug: Bug, id: string): Observable<Bug> {
+    return this._httpClient.put<Bug>(this._URL + `/bugs/${id}`, bug);
+  }
+
 }
