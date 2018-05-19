@@ -11,9 +11,21 @@ export class HttpService {
 
   constructor( private _httpClient: HttpClient) { }
 
-  getBugs(sortItem?: string, sortType?: Order ): Observable<Bug[]> {
+  getBugs(sortItem?: string,
+          sortType?: Order,
+          currentPage?: number,
+          pageSize?: number): Observable<Bug[]> {
     const params = {};
-    if (sortItem && sortType) { params['sort'] = `${sortItem},${sortType}`; }
+
+    if (sortItem && sortType) {
+      params['sort'] = `${sortItem},${sortType}`;
+    }
+
+    if (currentPage && pageSize) {
+      params['page'] = currentPage;
+      params['size'] = pageSize;
+    }
+
     return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params});
   }
 
