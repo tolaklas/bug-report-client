@@ -1,13 +1,14 @@
 <form class="form" [formGroup]='bugForm' [class.was-validated]="bugForm.invalid && bugForm.dirty" (submit)="formSubmit()">
-
-  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
-    <div class="col-md-2 mb-3">
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}" style="margin-top: 15px;">
+    <div class="col-md-6 mb-3">
       <label class="form-control-label">Title</label>
       <input class="form-control" formControlName='title' type="text" name="title">
       <div *ngIf="bugForm.get('title').invalid && bugForm.get('title').dirty" class="invalid-feedback">
         {{titleFormControlErrorMessage}}asdasd
       </div>
     </div>
+  </div>
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
     <div class="col-md-6 mb-3">
       <label class="form-control-label">description</label>
       <input class="form-control" type="text" name="description" formControlName='description'>
@@ -15,31 +16,36 @@
         {{descriptionFormControlErrorMessage}}
       </div>
     </div>
+  </div>
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
     <div class="col-md-6 mb-3">
       <label class="form-control-label">Priority</label>
-      <select formControlName='priority' name="priority">
+      <select class="form-control" formControlName='priority' name="priority">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let priority of priorities">
           {{priority}}
         </option>
       </select>
-      <br/>
       <div *ngIf="bugForm.get('priority').invalid && bugForm.get('priority').dirty" class="invalid-feedback">
         {{priorityFormControlErrorMessage}}
       </div>
     </div>
+  </div>
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
     <div class="col-md-6 mb-3">
-      <label class="form-control-label">reporter</label>
-      <select formControlName='reporter' name="reporter">
+      <label class="form-control-label">Reporter</label>
+      <select class="form-control" formControlName='reporter' name="reporter">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let reporter of reporters">
           {{reporter}}
         </option>
       </select>
     </div>
+  </div>
+  <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
     <div class="col-md-6 mb-3">
-      <label class="form-control-label">status</label>
-      <select formControlName="status" name="status">
+      <label class="form-control-label">Status</label>
+      <select class="form-control" formControlName="status" name="status">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let status of statusTypes">
           {{status}}

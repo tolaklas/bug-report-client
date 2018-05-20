@@ -1,13 +1,19 @@
+<div class="row">
+    <div class="col-12">
+      <h4> Create Comment</h4>
+    </div>
+  </div>
 <form class="form" [formGroup]='bugCommentForm' (submit)="formSubmit()">
-
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label class="form-control-label">Description</label>
       <input class="form-control" formControlName='description' type="text" name="description">
     </div>
+  </div>
+  <div class="form-row">
     <div class="col-md-6 mb-3">
       <label class="form-control-label">reporter</label>
-      <select formControlName='reporter' name="reporter">
+      <select class="form-control" formControlName='reporter' name="reporter">
         <option [ngValue]="null">Select</option>
         <option *ngFor="let reporter of reporters">
           {{reporter}}
@@ -15,7 +21,7 @@
       </select>
     </div>
   </div>
-  <button class="btn btn-primary" [disabled]='!bugCommentForm.valid'>Submit</button>
+  <button class="btn btn-primary" [disabled]='!bugCommentForm.valid'>Create</button>
 
 </form>
 
