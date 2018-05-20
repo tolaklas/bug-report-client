@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InterceptorService } from './auth/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormDirtyGuard } from './form-dirty.guard';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,10 @@ import { FormDirtyGuard } from './form-dirty.guard';
       multi: true
     },
     FormDirtyGuard
+  ],
+  declarations: [MenuComponent],
+  exports: [
+    MenuComponent
   ]
 })
 export class CoreModule { }
