@@ -21,7 +21,7 @@ export class HttpService {
       params['sort'] = `${sortItem},${sortType}`;
     }
 
-    if (currentPage && pageSize) {
+    if ((currentPage || currentPage === 0) && pageSize) {
       params['page'] = currentPage;
       params['size'] = pageSize;
     }

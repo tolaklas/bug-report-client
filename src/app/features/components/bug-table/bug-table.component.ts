@@ -3,6 +3,7 @@ import { Bug } from '../../models/bug';
 import { Order } from '../../models/order';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'codehub-bug-table',
@@ -16,7 +17,10 @@ export class BugTableComponent implements OnInit, OnDestroy {
   sortItem: string;
   order: Order;
   currentPage = 0;
-  pageSize = 10;
+  pageSize = 2;
+  hasNextPage = new Subject();
+  hasNextPage$ = this.hasNextPage.asObservable();
+
 
   headers: any[] = [
     {name: 'Title', value: 'title'},
@@ -49,17 +53,24 @@ export class BugTableComponent implements OnInit, OnDestroy {
   }
 
   get() {
-    this.sub = this._httpService.getBugs(this.sortItem, this.order).subscribe(
-      data => this.bugs = data,
+    this.sub = this._httpService.getBugs(this.sortItem, this.order, this.currentPage, this.pageSize).subscribe(
+      data => {
+        this.bugs = data;
+        this.hasMoreData();
+      },
       err => console.log(err)
     );
   }
 
   hasMoreData() {
-    const curPage = (this.currentPage + 1) * this.pageSize + 1;
-    this._httpService.getBugs(this.sortItem, this.order, curPage, 1).subscribe(
+    const newPageSize = (this.currentPage + 1) * this.pageSize + 1;
+    this._httpService.getBugs(this.sortItem, this.order, this.currentPage, newPageSize).subscribe(
       data => {
-        // if (data && data.length) {return Observable.of(true);}
+        if (data && data.length) {
+          this.hasNextPage.next(true);
+        } else {
+          this.hasNextPage.next(false);
+        }
       },
       err => console.log(err)
     );
@@ -74,11 +85,8 @@ export class BugTableComponent implements OnInit, OnDestroy {
   }
 
   private togglePage(step: number) {
-
-    console.log(this.currentPage);
     this.currentPage += step;
     this.get();
-
   }
 
   ngOnDestroy() {

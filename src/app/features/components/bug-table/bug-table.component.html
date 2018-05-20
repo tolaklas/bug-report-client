@@ -29,5 +29,5 @@
 
 <button (click)='leftPage()' [disabled]='currentPage-1 < 0'> &lt; </button>
 
-<button (click)='rightPage()'> &gt; </button>
+<button (click)='rightPage()' [disabled]='!(hasNextPage$ | async)'> &gt; </button>
 
