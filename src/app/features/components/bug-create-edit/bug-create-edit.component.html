@@ -51,11 +51,11 @@
 
 </form>
 
-<ng-container *ngIf="id">
+<div *ngIf="id">
   <br>
   <codehub-bug-comment-table [comments]='bug?.comments'></codehub-bug-comment-table>
   <hr>
   <codehub-bug-comment (postComment)='postComment($event)'></codehub-bug-comment>
-</ng-container>
+</div>
 
 <a routerLink="/">Back</a>

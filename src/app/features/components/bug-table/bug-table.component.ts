@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
+  moduleId: module.id,
   selector: 'codehub-bug-table',
   templateUrl: './bug-table.component.html',
   styleUrls: ['./bug-table.component.scss']

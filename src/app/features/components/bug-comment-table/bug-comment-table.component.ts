@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BugComment } from '../../models/bug-comment';
 
 @Component({
+  moduleId: module.id,
   selector: 'codehub-bug-comment-table',
   templateUrl: './bug-comment-table.component.html',
   styleUrls: ['./bug-comment-table.component.scss']

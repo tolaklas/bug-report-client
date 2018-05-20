@@ -9,6 +9,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { BugComment } from '../../models/bug-comment';
 
 @Component({
+  moduleId: module.id,
   selector: 'codehub-bug-comment',
   templateUrl: './bug-comment.component.html',
   styleUrls: ['./bug-comment.component.scss']
