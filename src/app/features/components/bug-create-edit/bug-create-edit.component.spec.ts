@@ -34,20 +34,37 @@ fdescribe('BugCreateEditComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should check pristine invalidity', () => {
     if (component.bugForm.pristine) {
       expect(component.bugForm.invalid).toBeTruthy();
     }
+  });
+
+  it('should check required validity', () => {
     component.bugForm.controls.title.setValue('Test');
     component.bugForm.controls.description.setValue('Test');
     component.bugForm.controls.priority.setValue('1');
     component.bugForm.controls.status.setValue('Done');
     expect(component.bugForm.valid).toBeTruthy();
+  });
 
+  it('should check QA without status invalidity', () => {
+    component.bugForm.controls.title.setValue('Test');
+    component.bugForm.controls.description.setValue('Test');
+    component.bugForm.controls.priority.setValue('1');
     component.bugForm.controls.reporter.setValue('QA');
-    expect(component.bugForm.valid).toBeTruthy();
+    expect(component.bugForm.invalid).toBeTruthy();
+  });
 
+  it('should check QA with status validity', () => {
+    component.bugForm.controls.title.setValue('Test');
+    component.bugForm.controls.description.setValue('Test');
+    component.bugForm.controls.priority.setValue('1');
+    component.bugForm.controls.reporter.setValue('QA');
     component.bugForm.controls.status.setValue('Ready for test');
     expect(component.bugForm.valid).toBeTruthy();
-
   });
+
 });
