@@ -25,7 +25,7 @@ export class BugCreateEditComponent implements OnInit {
   titleFormControl = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
   titleFormControlErrorMessage = '';
   titleFormControlValidationMessages = {
-    required : 'The first name is required',
+    required : 'The title is required',
     minlength: 'The minlength is 3 characters',
     maxlength: 'The maxlength is 25 characters'
   };
@@ -33,18 +33,18 @@ export class BugCreateEditComponent implements OnInit {
   descriptionFormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
   descriptionFormControlErrorMessage = '';
   descriptionFormControlValidationMessages = {
-    required : 'The first name is required',
+    required : 'The description is required',
     minlength: 'The minlength is 3 characters',
   };
 
   priorityFormControl = new FormControl('', [Validators.required]);
   priorityFormControlErrorMessage = '';
   priorityFormControlValidationMessages = {
-    required : 'The first name is required'
+    required : 'The priority is required'
   };
   reporterFormControl = new FormControl('');
   reporterFormControlErrorMessage = '';
-  statusFormControl = new FormControl('');
+  statusFormControl = new FormControl();
   statusFormControlErrorMessage = '';
   statusFormControlValidationMessages = {
     required : 'Status is required',
@@ -94,58 +94,7 @@ export class BugCreateEditComponent implements OnInit {
     });
 
     this.initialize(this._route.snapshot.params.id);
-
-    this.titleFormControl.valueChanges.subscribe(
-      value => {
-        this.titleFormControlErrorMessage = '';
-        if ((this.titleFormControl.touched || this.titleFormControl.dirty) && this.titleFormControl.errors) {
-          this.titleFormControlErrorMessage = Object.keys(this.titleFormControlValidationMessages)
-            .map(c => this.titleFormControlValidationMessages[c]).join(' ');
-        }
-      }
-    );
-
-    this.descriptionFormControl.valueChanges.subscribe(
-      value => {
-        this.descriptionFormControlErrorMessage = '';
-        if ((this.descriptionFormControl.touched || this.descriptionFormControl.dirty) && this.descriptionFormControl.errors) {
-          this.descriptionFormControlErrorMessage = Object.keys(this.descriptionFormControlValidationMessages)
-            .map(c => this.descriptionFormControlValidationMessages[c]).join(' ');
-        }
-      }
-    );
-
-    this.priorityFormControl.valueChanges.subscribe(
-      value => {
-        this.priorityFormControlErrorMessage = '';
-        if ((this.priorityFormControl.touched || this.priorityFormControl.dirty) && this.priorityFormControl.errors) {
-          this.priorityFormControlErrorMessage = Object.keys(this.priorityFormControlValidationMessages)
-            .map(c => this.priorityFormControlValidationMessages[c]).join(' ');
-        }
-      }
-    );
-
-    this.reporterFormControl.valueChanges.subscribe(
-      value => {
-        this.statusFormControlErrorMessage = '';
-        if ((this.reporterFormControl.touched || this.reporterFormControl.dirty) && this.reporterFormControl.value === 'QA') {
-          this.statusFormControl.setValidators(Validators.required);
-        } else if ((this.reporterFormControl.touched || this.reporterFormControl.dirty) && this.reporterFormControl.value !== 'QA') {
-          this.statusFormControl.clearValidators();
-        }
-        this.statusFormControl.updateValueAndValidity();
-      }
-    );
-
-    this.statusFormControl.valueChanges.subscribe(
-      value => {
-        this.statusFormControlErrorMessage = '';
-        if ((this.statusFormControl.touched || this.statusFormControl.dirty) && this.statusFormControl.errors) {
-          this.statusFormControlErrorMessage = Object.keys(this.statusFormControlValidationMessages)
-            .map(c => this.statusFormControlValidationMessages[c]).join(' ');
-        }
-      }
-    );
+    this.setupValidations();
   }
 
   formSubmit() {
@@ -178,6 +127,67 @@ export class BugCreateEditComponent implements OnInit {
         if (navigate) {this._router.navigate(['']); }
       },
       err => console.log(err)
+    );
+  }
+
+  private setupValidations() {
+    this.titleFormControl.valueChanges.subscribe(
+      value => {
+        this.titleFormControlErrorMessage = '';
+        if ((this.titleFormControl.touched || this.titleFormControl.dirty) && this.titleFormControl.errors) {
+          this.titleFormControlErrorMessage = Object.keys(this.titleFormControlValidationMessages)
+            .map(c => this.titleFormControlValidationMessages[c]).join(' ');
+        }
+        this.bugForm.updateValueAndValidity();
+      }
+    );
+
+    this.descriptionFormControl.valueChanges.subscribe(
+      value => {
+        this.descriptionFormControlErrorMessage = '';
+        if ((this.descriptionFormControl.touched || this.descriptionFormControl.dirty) && this.descriptionFormControl.errors) {
+          this.descriptionFormControlErrorMessage = Object.keys(this.descriptionFormControlValidationMessages)
+            .map(c => this.descriptionFormControlValidationMessages[c]).join(' ');
+        }
+      }
+    );
+
+    this.priorityFormControl.valueChanges.subscribe(
+      value => {
+        this.priorityFormControlErrorMessage = '';
+        if ((this.priorityFormControl.touched || this.priorityFormControl.dirty) && this.priorityFormControl.errors) {
+          this.priorityFormControlErrorMessage = Object.keys(this.priorityFormControlValidationMessages)
+            .map(c => this.priorityFormControlValidationMessages[c]).join(' ');
+        }
+      }
+    );
+
+    this.reporterFormControl.valueChanges.subscribe(
+      value => {
+        // this.statusFormControlErrorMessage = '';
+        console.log(this.statusFormControl.value);
+        if (this.reporterFormControl.value === 'QA') {
+          this.statusFormControl.setValidators(Validators.required);
+        } else if (this.reporterFormControl.value !== 'QA') {
+          this.statusFormControl.clearValidators();
+        }
+        this.statusFormControl.updateValueAndValidity();
+        if (! this.statusFormControl.valid) {
+          console.log("not valid");
+          this.statusFormControlErrorMessage = Object.keys(this.statusFormControlValidationMessages)
+            .map(c => this.statusFormControlValidationMessages[c]).join(' ');
+        }
+      }
+    );
+
+    this.statusFormControl.valueChanges.subscribe(
+      value => {
+        this.statusFormControlErrorMessage = '';
+        if ((this.statusFormControl.touched || this.statusFormControl.dirty) && this.statusFormControl.errors) {
+          this.statusFormControlErrorMessage = Object.keys(this.statusFormControlValidationMessages)
+            .map(c => this.statusFormControlValidationMessages[c]).join(' ');
+        }
+      }
     );
   }
 }

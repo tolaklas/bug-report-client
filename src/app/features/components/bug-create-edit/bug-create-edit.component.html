@@ -5,7 +5,7 @@
       <label class="form-control-label">Title</label>
       <input class="form-control" formControlName='title' type="text" name="title">
       <div *ngIf="bugForm.get('title').invalid && bugForm.get('title').dirty" class="invalid-feedback">
-        {{titleFormControlErrorMessage}}
+        {{titleFormControlErrorMessage}}asdasd
       </div>
     </div>
     <div class="col-md-6 mb-3">
@@ -23,6 +23,10 @@
           {{priority}}
         </option>
       </select>
+      <br/>
+      <div *ngIf="bugForm.get('priority').invalid && bugForm.get('priority').dirty" class="invalid-feedback">
+        {{priorityFormControlErrorMessage}}
+      </div>
     </div>
     <div class="col-md-6 mb-3">
       <label class="form-control-label">reporter</label>
@@ -41,10 +45,10 @@
           {{status}}
         </option>
       </select>
-      <div *ngIf="bugForm.get('status').invalid && bugForm.get('status').dirty" style="color:red">
+      <div class="invalid-feedback">
+        <br/>
         {{statusFormControlErrorMessage}}
       </div>
-      {{bugForm.get('status').invalid}} {{bugForm.get('status').dirty}}
     </div>
   </div>
   <button class="btn btn-primary" [disabled]="!bugForm.valid">Submit</button>
