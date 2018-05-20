@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Bug } from '../models/bug';
 import { Order } from '../models/order';
@@ -16,7 +16,7 @@ export class HttpService {
           currentPage?: number,
           pageSize?: number,
           searchParams?: any
-        ): Observable<Bug[]> {
+        ) {
     const params = {};
 
     if (sortItem && sortType) {
@@ -29,9 +29,16 @@ export class HttpService {
     }
 
     if (searchParams) {
-      params['bugQueryParamsPayload'] = searchParams;
+      Object.keys(searchParams).forEach(key => {
+        params[key] = searchParams[key];
+      });
     }
-    return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params});
+    return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params, observe: 'response'})
+    .map(
+      data => {
+        return {res: data.body, total: data.headers.get('totalPages')};
+      }
+    );
   }
 
   getBug(id: string): Observable<Bug> {

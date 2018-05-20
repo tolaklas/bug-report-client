@@ -55,18 +55,9 @@ export class BugTableComponent implements OnInit, OnDestroy {
   get(searchParams?: any) {
     this.sub = this._httpService.getBugs(this.sortItem, this.order, this.currentPage, this.pageSize, searchParams).subscribe(
       data => {
-        this.bugs = data;
-        // this.hasMoreData();
-      },
-      err => console.log(err)
-    );
-  }
-
-  hasMoreData() {
-    // const newPageSize = (this.currentPage + 1) * this.pageSize + 1;
-    this._httpService.getBugs(this.sortItem, this.order, this.currentPage + 1, this.pageSize).subscribe(
-      data => {
-        if (data && data.length) {
+        this.bugs = data.res;
+        const total = data.total ? parseFloat(data.total) : 0;
+        if (total > this.currentPage + 1) {
           this.hasNextPage.next(true);
         } else {
           this.hasNextPage.next(false);
