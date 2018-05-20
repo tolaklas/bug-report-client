@@ -17,19 +17,19 @@ export class BugTableComponent implements OnInit, OnDestroy {
   sortItem: string;
   order: Order;
   currentPage = 0;
-  pageSize = 2;
+  pageSize = 10;
   hasNextPage = new Subject();
   hasNextPage$ = this.hasNextPage.asObservable();
 
 
   headers: any[] = [
-    {name: 'Title', value: 'title'},
-    {name: 'Description', value: 'description'},
-    {name: 'Priority', value: 'priority'},
-    {name: 'Reporter', value: 'reporter'},
-    {name: 'Status', value: 'status'},
-    {name: 'Date Created', value: 'createdAt'},
-    {name: 'Date Updated', value: 'updatedAt'},
+    {name: 'Title', isSearchable: true, value: 'title', search: ''},
+    {name: 'Description', isSearchable: false, value: 'description'},
+    {name: 'Priority', isSearchable: true, value: 'priority', search: ''},
+    {name: 'Reporter', isSearchable: true, value: 'reporter', search: ''},
+    {name: 'Status', isSearchable: true, value: 'status', search: ''},
+    {name: 'Date Created', isSearchable: false, value: 'createdAt'},
+    {name: 'Date Updated', isSearchable: false, value: 'updatedAt'},
   ];
 
   constructor(
@@ -52,19 +52,19 @@ export class BugTableComponent implements OnInit, OnDestroy {
     return this.order === Order.asc ? Order.desc : Order.asc;
   }
 
-  get() {
-    this.sub = this._httpService.getBugs(this.sortItem, this.order, this.currentPage, this.pageSize).subscribe(
+  get(searchParams?: any) {
+    this.sub = this._httpService.getBugs(this.sortItem, this.order, this.currentPage, this.pageSize, searchParams).subscribe(
       data => {
         this.bugs = data;
-        this.hasMoreData();
+        // this.hasMoreData();
       },
       err => console.log(err)
     );
   }
 
   hasMoreData() {
-    const newPageSize = (this.currentPage + 1) * this.pageSize + 1;
-    this._httpService.getBugs(this.sortItem, this.order, this.currentPage, newPageSize).subscribe(
+    // const newPageSize = (this.currentPage + 1) * this.pageSize + 1;
+    this._httpService.getBugs(this.sortItem, this.order, this.currentPage + 1, this.pageSize).subscribe(
       data => {
         if (data && data.length) {
           this.hasNextPage.next(true);
@@ -87,6 +87,19 @@ export class BugTableComponent implements OnInit, OnDestroy {
   private togglePage(step: number) {
     this.currentPage += step;
     this.get();
+  }
+
+  filterBugs() {
+    this.currentPage = 0;
+    const params = {};
+    this.headers.forEach(
+      header => {
+        if (header.search) {
+          params[header.value] = header.search;
+        }
+      }
+    );
+    this.get(params);
   }
 
   ngOnDestroy() {

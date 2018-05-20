@@ -12,6 +12,15 @@
       <th *ngFor="let header of headers">
         <a (click)='sort(header?.value)'>{{header?.name}}</a>
       </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers">
+        <input type="text" class="form-control" *ngIf="header?.isSearchable" [(ngModel)]="header.search">
+      </th>
+      <th><button (click)='filterBugs()'>Filter</button></th>
     </tr>
   </thead>
   <tbody>

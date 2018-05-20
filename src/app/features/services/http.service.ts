@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { Bug } from '../models/bug';
@@ -14,7 +14,9 @@ export class HttpService {
   getBugs(sortItem?: string,
           sortType?: Order,
           currentPage?: number,
-          pageSize?: number): Observable<Bug[]> {
+          pageSize?: number,
+          searchParams?: any
+        ): Observable<Bug[]> {
     const params = {};
 
     if (sortItem && sortType) {
@@ -26,6 +28,9 @@ export class HttpService {
       params['size'] = pageSize;
     }
 
+    if (searchParams) {
+      params['bugQueryParamsPayload'] = searchParams;
+    }
     return this._httpClient.get<Bug[]>(this._URL + '/bugs', {params: params});
   }
 
