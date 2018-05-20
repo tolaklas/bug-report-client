@@ -173,7 +173,6 @@ export class BugCreateEditComponent implements OnInit {
         }
         this.statusFormControl.updateValueAndValidity();
         if (! this.statusFormControl.valid) {
-          console.log("not valid");
           this.statusFormControlErrorMessage = Object.keys(this.statusFormControlValidationMessages)
             .map(c => this.statusFormControlValidationMessages[c]).join(' ');
         }

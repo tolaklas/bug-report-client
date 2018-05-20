@@ -11,7 +11,7 @@
   <div class="form-row" [ngClass]="{'has-error': titleFormControl.invalid && titleFormControl.dirty}">
     <div class="col-md-6 mb-3">
       <label class="form-control-label">description</label>
-      <input class="form-control" type="text" name="description" formControlName='description'>
+      <textarea class="form-control" type="text" name="description" formControlName='description'></textarea>
       <div *ngIf="bugForm.get('description').invalid && bugForm.get('description').dirty" class="invalid-feedback">
         {{descriptionFormControlErrorMessage}}
       </div>
