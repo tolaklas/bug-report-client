@@ -61,6 +61,9 @@ export class BugCreateEditComponent implements OnInit {
     if (id) {
       this._httpService.getBug(id).subscribe(b => {
         this.bug = b;
+        if (! b.comments) {
+          this.bug.comments = [];
+        }
         this.bugForm.controls.title.setValue(this.bug.title);
         this.bugForm.controls.description.setValue(this.bug.description);
         this.bugForm.controls.priority.setValue(this.bug.priority);
@@ -146,12 +149,12 @@ export class BugCreateEditComponent implements OnInit {
 
   formSubmit() {
     this.bug = this.bugForm.value;
+    this.bugForm.markAsPristine();
     if (this.id) {
       this.updateBug(this.bug);
     } else {
       this._httpService.postBug(this.bug).pipe(debounce(() => timer(5000))).subscribe(
         data => {
-          console.log(data);
           this._router.navigate(['']);
         },
         err => console.log(err)
@@ -171,7 +174,6 @@ export class BugCreateEditComponent implements OnInit {
   private updateBug(bug: Bug, navigate: boolean = true) {
     this._httpService.updateBug(bug, this.id).pipe(debounce(() => timer(5000))).subscribe(
       data => {
-        console.log(data);
         if (navigate) {this._router.navigate(['']); }
       },
       err => console.log(err)
