@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { InterceptorService } from './auth/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormDirtyGuard } from './form-dirty.guard';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }
+    },
+    FormDirtyGuard
   ]
 })
 export class CoreModule { }

@@ -159,6 +159,10 @@ export class BugCreateEditComponent implements OnInit {
     }
   }
 
+  canDeactivate(): boolean {
+    return !this.bugForm.dirty;
+  }
+
   postComment(comment: BugComment) {
     this.bug.comments.push(comment);
     this.updateBug(this.bug, false);
